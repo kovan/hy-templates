@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "poetry-hy-plugin"
+version = "0.1.0"
+description = "Poetry plugin to scaffold Hy projects"
+requires-python = ">= 3.9"
+dependencies = ["poetry >= 1.2.0"]
+license = {text = "MIT"}
+
+[project.entry-points."poetry.application.plugin"]
+hy = "poetry_hy_plugin.plugin:HyPlugin"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+poetry_hy_plugin = ["templates/**/*"]
