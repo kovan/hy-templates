@@ -1,4 +1,0 @@
-(import {module_name}.main [main])
-
-(defn test-main []
-  (assert (is (main) None)))

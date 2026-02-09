@@ -2,74 +2,29 @@
 
 Project templates for bootstrapping [Hy](https://hylang.org/) (a Lisp embedded in Python) projects.
 
-All templates generate the same project structure with:
-- `src/` layout with `.hy` source files
-- `pyproject.toml` with Hy as build + runtime dependency
-- `*.hy` package-data configuration (so `.hy` files get included in wheels)
-- `conftest.py` for pytest discovery of `.hy` test files
-- MIT license
-
 ## Templates
 
-### cookiecutter-hy
+| Tool | Repo | Install | Usage |
+|------|------|---------|-------|
+| **Cookiecutter** | [cookiecutter-hy](https://github.com/kovan/cookiecutter-hy) | `pip install cookiecutter` | `cookiecutter gh:kovan/cookiecutter-hy` |
+| **PDM** | *(uses cookiecutter)* | `pip install cookiecutter` | `pdm init --cookiecutter gh:kovan/cookiecutter-hy` |
+| **Poetry** | [poetry-hy-plugin](https://github.com/kovan/poetry-hy-plugin) | `poetry self add poetry-hy-plugin` | `poetry new-hy my-project` |
+| **Hatch** | [hatch-hy](https://github.com/kovan/hatch-hy) | `pipx inject hatch hatch-hy` | `hatch new my-project` |
 
-Universal template using [Cookiecutter](https://github.com/cookiecutter/cookiecutter). Works with any workflow.
-
-```bash
-pip install cookiecutter
-cookiecutter gh:kovan/hy-templates --directory=cookiecutter-hy
-```
-
-Also works with PDM's cookiecutter integration:
-
-```bash
-pdm init --cookiecutter https://github.com/kovan/hy-templates --directory=cookiecutter-hy
-```
-
-### template-hy
-
-Static [PDM](https://pdm-project.org/) project template.
-
-```bash
-pdm new https://github.com/kovan/hy-templates/tree/main/template-hy my-project
-```
-
-### poetry-hy-plugin
-
-[Poetry](https://python-poetry.org/) plugin that adds a `new-hy` command.
-
-```bash
-poetry self add poetry-hy-plugin
-poetry new-hy my-project
-```
-
-### hatch-hy
-
-[Hatch](https://hatch.pypa.io/) template plugin (experimental — uses undocumented API).
-
-```bash
-pipx inject hatch hatch-hy
-```
-
-Then add to `~/.config/hatch/config.toml`:
-
-```toml
-[template.plugins.hy]
-src-layout = true
-```
-
-```bash
-hatch new my-project
-```
+The Poetry and Hatch plugins are also on PyPI:
+[poetry-hy-plugin](https://pypi.org/project/poetry-hy-plugin/) |
+[hatch-hy](https://pypi.org/project/hatch-hy/)
 
 ## Generated Structure
 
+All templates produce the same project:
+
 ```
 my-project/
-├── pyproject.toml
+├── pyproject.toml          # hy dependency, *.hy package-data
 ├── README.md
 ├── LICENSE
-├── conftest.py
+├── conftest.py             # pytest discovery for .hy files
 ├── src/
 │   └── my_project/
 │       ├── __init__.hy
@@ -78,13 +33,11 @@ my-project/
     └── test_main.hy
 ```
 
-## Getting Started
+## Why?
 
-After generating a project:
+Starting a Hy project requires non-obvious boilerplate:
+- `*.hy` in `package-data` so `.hy` files get included in wheels
+- `hy` as both a build and runtime dependency
+- `conftest.py` with a `pytest_collect_file` hook for `.hy` test discovery
 
-```bash
-cd my-project
-pip install -e .
-hy src/my_project/main.hy    # Hello, Hy!
-pytest                        # runs .hy tests via conftest.py
-```
+These templates handle all of that.
